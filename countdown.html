@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>Waiting for Saymuu's Birthday...</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌸</text></svg>">
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #ffe0ef, #ffcce0);
+      font-family: 'Nunito', sans-serif;
+      overflow: hidden;
+      animation: pageFadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    @keyframes pageFadeIn {
+      from { opacity: 0; filter: blur(15px); transform: scale(1.02); }
+      to { opacity: 1; filter: blur(0); transform: scale(1); }
+    }
+
+    .countdown-container {
+      background: rgba(255, 255, 255, 0.4);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      padding: 40px;
+      border-radius: 30px;
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      box-shadow: 0 8px 32px 0 rgba(233, 30, 140, 0.2);
+      text-align: center;
+      z-index: 10;
+      transform: scale(0.9);
+      animation: popIn 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+      max-width: 90%;
+      box-sizing: border-box;
+      width: 100%;
+    }
+
+    @keyframes popIn {
+      to { transform: scale(1); }
+    }
+
+    .title {
+      font-family: 'Dancing Script', cursive;
+      font-size: 48px;
+      color: var(--accent);
+      margin-bottom: 30px;
+      text-shadow: 0 2px 10px rgba(233, 30, 140, 0.2);
+    }
+
+    .timer {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .time-box {
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      padding: 15px 20px;
+      border-radius: 20px;
+      width: 75px;
+      box-shadow: 0 8px 32px 0 rgba(233, 30, 140, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .time-val {
+      display: block;
+      font-size: 36px;
+      font-weight: 800;
+      color: var(--accent2);
+      line-height: 1;
+      margin-bottom: 5px;
+      font-variant-numeric: tabular-nums;
+      width: 100%;
+    }
+
+    .time-label {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--deep);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      opacity: 0.8;
+    }
+
+    .heart-float {
+      position: absolute;
+      font-size: 30px;
+      animation: floatUp 6s linear infinite;
+      opacity: 0.6;
+      z-index: 1;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(100vh) scale(0.5); opacity: 0; }
+      20% { opacity: 0.6; }
+      80% { opacity: 0.6; }
+      100% { transform: translateY(-20vh) scale(1.2); opacity: 0; }
+    }
+
+    @media (max-width: 600px) {
+      .countdown-container { padding: 25px 15px; border-radius: 20px; }
+      .timer { gap: 10px; flex-wrap: wrap; }
+      .time-box { padding: 10px; min-width: 0; flex: 1 1 40%; box-sizing: border-box; }
+      .time-val { font-size: 28px; margin-bottom: 2px; }
+      .time-label { font-size: 12px; }
+      .title { font-size: 32px; margin-bottom: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating Hearts Background -->
+  <div id="floating-hearts"></div>
+
+  <!-- Anticipation Music -->
+  <audio id="bg-music" loop>
+    <source src="assets/song1.mp3" type="audio/mpeg">
+  </audio>
+  <button id="music-btn" style="position: absolute; top: 20px; right: 20px; background: rgba(255,255,255,0.7); backdrop-filter: blur(5px); border: 1px solid rgba(233,30,140,0.3); color: var(--accent); padding: 10px 20px; border-radius: 30px; font-family: 'Nunito', sans-serif; font-weight: bold; cursor: pointer; z-index: 100; box-shadow: 0 4px 10px rgba(233,30,140,0.1); transition: all 0.3s ease;">🎵 Play Music</button>
+
+  <div class="countdown-container">
+    <h1 class="title">Saymuu's Birthday In... ✨</h1>
+    <div class="timer">
+      <div class="time-box">
+        <span class="time-val" id="days">00</span>
+        <span class="time-label">Days</span>
+      </div>
+      <div class="time-box">
+        <span class="time-val" id="hours">00</span>
+        <span class="time-label">Hours</span>
+      </div>
+      <div class="time-box">
+        <span class="time-val" id="minutes">00</span>
+        <span class="time-label">Mins</span>
+      </div>
+      <div class="time-box">
+        <span class="time-val" id="seconds">00</span>
+        <span class="time-label">Secs</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Music Controls
+    const musicBtn = document.getElementById('music-btn');
+    const bgMusic = document.getElementById('bg-music');
+    let isPlaying = false;
+
+    musicBtn.addEventListener('click', () => {
+      if (isPlaying) {
+        bgMusic.pause();
+        musicBtn.innerHTML = '🎵 Play Music';
+      } else {
+        bgMusic.play();
+        musicBtn.innerHTML = '🎶 Pause Music';
+      }
+      isPlaying = !isPlaying;
+    });
+
+    // Set the EXACT birthday date and time (Midnight of May 11th, 2026)
+    // const targetDate = new Date("2026-05-11T00:00:00").getTime();
+
+    // FOR TESTING: 10 Seconds countdown
+    const targetDate = new Date().getTime() + (10 * 1000);
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const difference = targetDate - now;
+
+      // If the countdown is finished, redirect to main page!
+      if (difference <= 0) {
+        window.location.href = 'index.html';
+        return;
+      }
+
+      // Time calculations
+      const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+      // Update UI with leading zeros
+      document.getElementById('days').innerText = days.toString().padStart(2, '0');
+      document.getElementById('hours').innerText = hours.toString().padStart(2, '0');
+      document.getElementById('minutes').innerText = minutes.toString().padStart(2, '0');
+      document.getElementById('seconds').innerText = seconds.toString().padStart(2, '0');
+    }
+
+    // Run every second
+    setInterval(updateCountdown, 1000);
+    updateCountdown(); // Run immediately on load
+
+    // Create floating background hearts
+    const heartsContainer = document.getElementById('floating-hearts');
+    const emojis = ['💖', '🌸', '✨', '🎀', '🧸'];
+    
+    for(let i=0; i<20; i++) {
+        let el = document.createElement('div');
+        el.className = 'heart-float';
+        el.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+        el.style.left = Math.random() * 90 + 'vw';
+        el.style.animationDuration = (Math.random() * 5 + 4) + 's';
+        el.style.animationDelay = (Math.random() * 5) + 's';
+        let size = Math.random() * 20 + 20;
+        el.style.fontSize = size + 'px';
+        heartsContainer.appendChild(el);
+    }
+  </script>
+</body>
+</html>
