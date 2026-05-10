@@ -6,13 +6,14 @@
     // The "No Peeking" Lock: Active!
     const targetDate = new Date("2026-05-11T00:00:00").getTime();
     if (new Date().getTime() < targetDate) {
-      window.location.href = 'countdown.html';
+      window.location.replace('countdown.html');
     }
   </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
   <title>Happy Birthday Saymuuu..!🎂</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌸</text></svg>">
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌸</text></svg>">
   <link
     href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Nunito:wght@400;600;700&display=swap"
     rel="stylesheet">
@@ -35,7 +36,8 @@
   <!-- Cinematic Overlay for Interaction (Fixes mobile autoplay & UX) -->
   <div class="overlay-start" id="cinematic-overlay">
     <div class="start-card">
-      <h2 style="font-family:'Dancing Script', cursive; font-size: 42px; color: var(--accent); margin-bottom: 10px;">For You, Saymuu 🌸</h2>
+      <h2 style="font-family:'Dancing Script', cursive; font-size: 42px; color: var(--accent); margin-bottom: 10px;">For
+        You, Saymuu 🌸</h2>
       <p style="color: var(--deep); margin-bottom: 25px; font-size: 16px;">Tap to open your birthday surprise!</p>
       <button class="start-btn" id="open-surprise-btn">Open Surprise 🎁</button>
     </div>
@@ -52,7 +54,9 @@
     <div class="cake-anim" id="interactive-cake" style="cursor: pointer; user-select: none;">🎂</div>
     <div class="hb-text">Happy Birthday</div>
     <span class="name-text">
-      <span style="--i:1">S</span><span style="--i:2">a</span><span style="--i:3">y</span><span style="--i:4">m</span><span style="--i:5">u</span><span style="--i:6">u</span><span style="--i:7">u</span><span style="--i:8">!</span>
+      <span style="--i:1">S</span><span style="--i:2">a</span><span style="--i:3">y</span><span
+        style="--i:4">m</span><span style="--i:5">u</span><span style="--i:6">u</span><span style="--i:7">u</span><span
+        style="--i:8">!</span>
     </span>
     <div class="hearts-row">
       <span class="hr">💗</span>

@@ -1,19 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Waiting for Saymuu's Birthday...</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌸</text></svg>">
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌸</text></svg>">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Nunito:wght@400;600;700;800&display=swap"
+    rel="stylesheet">
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-    html { height: 100%; }
+    html {
+      height: 100%;
+    }
 
     body {
-      width: 100%; height: 100%;
-      position: fixed; inset: 0;
+      width: 100%;
+      height: 100%;
+      position: fixed;
+      inset: 0;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -27,17 +41,26 @@
     }
 
     @keyframes gradientBG {
-      0%, 100% { background-position: 0% 50%; }
-      50%       { background-position: 100% 50%; }
+
+      0%,
+      100% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
     }
 
     /* ── Floating emojis ── */
     .floats {
-      position: fixed; inset: 0;
+      position: fixed;
+      inset: 0;
       pointer-events: none;
       overflow: hidden;
       z-index: 1;
     }
+
     .heart-float {
       position: absolute;
       bottom: -12vh;
@@ -50,20 +73,47 @@
       line-height: 1;
       touch-action: manipulation;
     }
+
     @keyframes floatUp {
-      0%   { transform: translateY(0)      rotate(-8deg)  scale(0.8); opacity: 0;   }
-      8%   { opacity: 0.7; }
-      90%  { opacity: 0.7; }
-      100% { transform: translateY(-112vh) rotate(12deg)  scale(1.1); opacity: 0;   }
+      0% {
+        transform: translateY(0) rotate(-8deg) scale(0.8);
+        opacity: 0;
+      }
+
+      8% {
+        opacity: 0.7;
+      }
+
+      90% {
+        opacity: 0.7;
+      }
+
+      100% {
+        transform: translateY(-112vh) rotate(12deg) scale(1.1);
+        opacity: 0;
+      }
     }
+
     .heart-float.pop {
-      animation: popBurst 0.32s cubic-bezier(.175,.885,.32,1.275) forwards;
+      animation: popBurst 0.32s cubic-bezier(.175, .885, .32, 1.275) forwards;
       pointer-events: none;
     }
+
     @keyframes popBurst {
-      0%   { transform: scale(1);   opacity: 0.7; }
-      50%  { transform: scale(2.2); opacity: 1;   }
-      100% { transform: scale(0);   opacity: 0;   }
+      0% {
+        transform: scale(1);
+        opacity: 0.7;
+      }
+
+      50% {
+        transform: scale(2.2);
+        opacity: 1;
+      }
+
+      100% {
+        transform: scale(0);
+        opacity: 0;
+      }
     }
 
     /* ── Music button ── */
@@ -76,52 +126,92 @@
       align-items: center;
       gap: 7px;
       padding: 9px 16px;
-      background: rgba(255,255,255,0.5);
+      background: rgba(255, 255, 255, 0.5);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
-      border: 1px solid rgba(255,255,255,0.85);
+      border: 1px solid rgba(255, 255, 255, 0.85);
       border-radius: 50px;
       cursor: pointer;
       font-family: 'Nunito', sans-serif;
       font-size: 13px;
       font-weight: 700;
       color: #c2185b;
-      box-shadow: 0 4px 18px rgba(233,30,140,0.13);
+      box-shadow: 0 4px 18px rgba(233, 30, 140, 0.13);
       transition: transform 0.2s, box-shadow 0.2s;
       touch-action: manipulation;
     }
-    .music-btn:active { transform: scale(0.95); }
 
-    .bars { display: flex; align-items: flex-end; gap: 2px; height: 15px; }
-    .bar  { width: 3px; background: #e91e8c; border-radius: 2px; height: 5px; }
-    .music-btn.playing .bar:nth-child(1) { animation: barDance .55s 0.0s ease-in-out infinite alternate; }
-    .music-btn.playing .bar:nth-child(2) { animation: barDance .55s 0.18s ease-in-out infinite alternate; }
-    .music-btn.playing .bar:nth-child(3) { animation: barDance .55s 0.36s ease-in-out infinite alternate; }
-    @keyframes barDance { from { height: 4px; } to { height: 15px; } }
+    .music-btn:active {
+      transform: scale(0.95);
+    }
+
+    .bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 2px;
+      height: 15px;
+    }
+
+    .bar {
+      width: 3px;
+      background: #e91e8c;
+      border-radius: 2px;
+      height: 5px;
+    }
+
+    .music-btn.playing .bar:nth-child(1) {
+      animation: barDance .55s 0.0s ease-in-out infinite alternate;
+    }
+
+    .music-btn.playing .bar:nth-child(2) {
+      animation: barDance .55s 0.18s ease-in-out infinite alternate;
+    }
+
+    .music-btn.playing .bar:nth-child(3) {
+      animation: barDance .55s 0.36s ease-in-out infinite alternate;
+    }
+
+    @keyframes barDance {
+      from {
+        height: 4px;
+      }
+
+      to {
+        height: 15px;
+      }
+    }
 
     /* ── Card ── */
     .card {
       position: relative;
       z-index: 10;
-      background: rgba(255,255,255,0.4);
+      background: rgba(255, 255, 255, 0.4);
       backdrop-filter: blur(28px);
       -webkit-backdrop-filter: blur(28px);
-      border: 1px solid rgba(255,255,255,0.88);
+      border: 1px solid rgba(255, 255, 255, 0.88);
       border-radius: 32px;
       text-align: center;
-      animation: popIn 0.85s cubic-bezier(.175,.885,.32,1.275) both;
+      animation: popIn 0.85s cubic-bezier(.175, .885, .32, 1.275) both;
 
       /* ── fluid sizing: fills most of the screen on mobile, capped on desktop ── */
       width: min(480px, 90vw);
       padding: clamp(24px, 6vw, 48px) clamp(18px, 6vw, 44px);
 
       box-shadow:
-        inset 0 1.5px 0 rgba(255,255,255,0.9),
-        0 16px 40px rgba(233,30,140,0.15);
+        inset 0 1.5px 0 rgba(255, 255, 255, 0.9),
+        0 16px 40px rgba(233, 30, 140, 0.15);
     }
+
     @keyframes popIn {
-      from { transform: scale(0.86); opacity: 0; }
-      to   { transform: scale(1);    opacity: 1; }
+      from {
+        transform: scale(0.86);
+        opacity: 0;
+      }
+
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
     }
 
     /* ── Title ── */
@@ -132,7 +222,7 @@
       color: #c2185b;
       line-height: 1.2;
       margin-bottom: clamp(18px, 5vw, 34px);
-      text-shadow: 0 2px 12px rgba(233,30,140,0.18);
+      text-shadow: 0 2px 12px rgba(233, 30, 140, 0.18);
       word-break: keep-all;
     }
 
@@ -144,9 +234,9 @@
     }
 
     .time-box {
-      background: rgba(255,255,255,0.62);
-      border: 1px solid rgba(255,255,255,0.92);
-      border-bottom: 3px solid rgba(233,30,140,0.2);
+      background: rgba(255, 255, 255, 0.62);
+      border: 1px solid rgba(255, 255, 255, 0.92);
+      border-bottom: 3px solid rgba(233, 30, 140, 0.2);
       border-radius: 20px;
       /* vertical padding scales with viewport; horizontal stays tight */
       padding: clamp(12px, 3.5vw, 22px) 4px;
@@ -154,13 +244,14 @@
       flex-direction: column;
       align-items: center;
       gap: 5px;
-      transition: transform 0.25s cubic-bezier(.175,.885,.32,1.275), box-shadow 0.25s;
+      transition: transform 0.25s cubic-bezier(.175, .885, .32, 1.275), box-shadow 0.25s;
     }
+
     /* hover only on non-touch */
     @media (hover: hover) {
       .time-box:hover {
         transform: translateY(-4px) scale(1.03);
-        box-shadow: 0 10px 30px rgba(233,30,140,0.2);
+        box-shadow: 0 10px 30px rgba(233, 30, 140, 0.2);
       }
     }
 
@@ -172,13 +263,26 @@
       line-height: 1;
       font-variant-numeric: tabular-nums;
     }
+
     .time-val.pulse {
-      animation: numPulse 0.36s cubic-bezier(.175,.885,.32,1.275);
+      animation: numPulse 0.36s cubic-bezier(.175, .885, .32, 1.275);
     }
+
     @keyframes numPulse {
-      0%   { transform: scale(1);    color: #ad1457; }
-      50%  { transform: scale(1.2);  color: #e91e8c; }
-      100% { transform: scale(1);    color: #ad1457; }
+      0% {
+        transform: scale(1);
+        color: #ad1457;
+      }
+
+      50% {
+        transform: scale(1.2);
+        color: #e91e8c;
+      }
+
+      100% {
+        transform: scale(1);
+        color: #ad1457;
+      }
     }
 
     .time-label {
@@ -202,17 +306,23 @@
 
     /* ── Very small phones (≤360px) extra tightening ── */
     @media (max-width: 360px) {
-      .card { border-radius: 26px; }
-      .time-box { border-radius: 16px; }
+      .card {
+        border-radius: 26px;
+      }
+
+      .time-box {
+        border-radius: 16px;
+      }
     }
   </style>
 </head>
+
 <body>
 
   <div class="floats" id="floats"></div>
 
   <audio id="bg-music" loop>
-    <source src="assets/song1.mp3" type="audio/mpeg">
+    <source src="assets/Happy Birthday Meme Song.mp3" type="audio/mpeg">
   </audio>
 
   <button class="music-btn" id="music-btn" aria-label="Play music">
@@ -252,8 +362,8 @@
   <script>
     // Music
     const musicBtn = document.getElementById('music-btn');
-    const bgMusic  = document.getElementById('bg-music');
-    const label    = document.getElementById('music-label');
+    const bgMusic = document.getElementById('bg-music');
+    const label = document.getElementById('music-label');
     let playing = false;
 
     musicBtn.addEventListener('click', () => {
@@ -268,7 +378,7 @@
 
     function setVal(id, val) {
       const el = document.getElementById(id);
-      const s  = val.toString().padStart(2, '0');
+      const s = val.toString().padStart(2, '0');
       if (el.textContent !== s) {
         el.textContent = s;
         el.classList.remove('pulse');
@@ -277,22 +387,27 @@
       }
     }
 
+    let intervalId;
     function tick() {
       const diff = target - Date.now();
-      if (diff <= 0) { window.location.href = 'index.html'; return; }
-      setVal('days',    Math.floor(diff / 86400000));
-      setVal('hours',   Math.floor((diff % 86400000) / 3600000));
-      setVal('minutes', Math.floor((diff % 3600000)  / 60000));
-      setVal('seconds', Math.floor((diff % 60000)    / 1000));
+      if (diff <= 0) {
+        clearInterval(intervalId);
+        window.location.replace('index.html');
+        return;
+      }
+      setVal('days', Math.floor(diff / 86400000));
+      setVal('hours', Math.floor((diff % 86400000) / 3600000));
+      setVal('minutes', Math.floor((diff % 3600000) / 60000));
+      setVal('seconds', Math.floor((diff % 60000) / 1000));
     }
 
-    setInterval(tick, 1000);
+    intervalId = setInterval(tick, 1000);
     tick();
 
     // Floating emojis
-    const floats  = document.getElementById('floats');
-    const emojis  = ['💖', '🌸', '✨', '🎀', '🧸', '🎂', '🎉', '💕', '🌷'];
-    const COUNT   = 22;
+    const floats = document.getElementById('floats');
+    const emojis = ['💖', '🌸', '✨', '🎀', '🧸', '🎂', '🎉', '💕', '🌷'];
+    const COUNT = 22;
 
     function makeFloat() {
       const el = document.createElement('span');
@@ -338,4 +453,5 @@
     for (let i = 0; i < COUNT; i++) makeFloat();
   </script>
 </body>
+
 </html>
