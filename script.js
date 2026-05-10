@@ -8,7 +8,8 @@ const PHOTOS = [
     { src: 'Photos/IMG_20260507_194245_207.jpg', caption: 'Precious moments 💖' },
     { src: 'Photos/IMG_20260507_194246_773.jpg', caption: 'So much joy 🌟' },
     { src: 'Photos/IMG_20260507_194248_405.jpg', caption: 'My favorite person 💗' },
-    { src: 'assets/IMG-20251123-WA0003.jpg', caption: 'Absolute perfection ✨' }
+    { src: 'assets/IMG-20251123-WA0003.jpg', caption: 'Absolute perfection ✨' },
+    { src: 'Photos/Cuite.png', caption: 'Too cute 🎀' }
 ];
 
 // Helper: Haptic Feedback
