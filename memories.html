@@ -51,11 +51,9 @@
       animation: gradientShift 10s ease infinite;
       font-family: 'Nunito', sans-serif;
       color: var(--deep);
-      overflow: hidden; /* prevents y-scroll from confetti/petals */
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+      overflow-x: hidden;
+      overflow-y: auto; /* ALLOW SCROLLING */
+      display: block; /* Removed flex centering to allow natural document flow */
       -webkit-tap-highlight-color: transparent;
       animation: pageFadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1);
     }
@@ -159,43 +157,43 @@
     }
 
     .back-btn {
-      position: absolute;
+      position: fixed;
       top: 20px;
       left: 20px;
-      background: rgba(255, 255, 255, 0.4);
+      background: rgba(255, 255, 255, 0.7);
       backdrop-filter: blur(25px);
       -webkit-backdrop-filter: blur(25px);
-      border: 1px solid rgba(255, 255, 255, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.9);
       color: var(--accent);
       padding: 10px 20px;
       border-radius: 30px;
       text-decoration: none;
       font-weight: 700;
-      z-index: 100;
+      z-index: 1000;
       transition: all 0.3s ease;
       box-shadow: 0 8px 32px 0 rgba(233, 30, 140, 0.15);
     }
 
     .back-btn:hover {
-      background: rgba(255, 255, 255, 0.9);
+      background: rgba(255, 255, 255, 1);
       transform: translateY(-2px);
       box-shadow: 0 6px 20px rgba(233, 30, 140, 0.2);
     }
 
     .music-control {
-      position: absolute;
+      position: fixed;
       top: 20px;
       right: 20px;
-      background: rgba(255, 255, 255, 0.4);
+      background: rgba(255, 255, 255, 0.7);
       backdrop-filter: blur(25px);
       -webkit-backdrop-filter: blur(25px);
-      border: 1px solid rgba(255, 255, 255, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.9);
       color: var(--accent);
       padding: 10px 20px;
       border-radius: 30px;
       cursor: pointer;
       font-weight: 700;
-      z-index: 100;
+      z-index: 1000;
       transition: all 0.3s ease;
       box-shadow: 0 8px 32px 0 rgba(233, 30, 140, 0.15);
     }
@@ -205,258 +203,8 @@
       box-shadow: 0 6px 20px rgba(233, 30, 140, 0.4);
     }
 
-    .slideshow-wrapper {
-      position: relative;
-      width: 100%;
-      max-width: 500px;
-      height: 70vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 10;
-    }
-
-    .slide {
-      position: absolute;
-      width: 90vw;
-      max-width: 380px;
-      background: white;
-      padding: 12px 12px 24px 12px;
-      border-radius: 12px;
-      box-shadow: 0 10px 25px rgba(233, 30, 140, 0.15);
-      opacity: 0;
-      visibility: hidden;
-      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      transform: scale(0.8) translateY(30px);
-      /* Removed will-change to prevent mobile GPU lag from 22 hardware layers */
-    }
-
-    .slide.active {
-      opacity: 1;
-      visibility: visible;
-      transform: scale(1) translateY(0);
-      z-index: 10;
-    }
-
-    .slide.prev {
-      transform: scale(0.9) translateX(-100px) rotate(-10deg);
-      opacity: 0;
-    }
-
-    .slide.next {
-      transform: scale(0.9) translateX(100px) rotate(10deg);
-      opacity: 0;
-    }
-
-    .slide img,
-    .slide video {
-      width: 100%;
-      height: 55vh;
-      max-height: 400px;
-      object-fit: contain; /* Changed from cover so photos aren't cropped! */
-      border-radius: 8px;
-      background: #ffe4ef; /* Light pink background for contained photos */
-    }
-
-    .caption {
-      margin-top: 20px;
-      font-family: 'Dancing Script', cursive;
-      font-size: 30px;
-      color: var(--deep);
-      text-align: center;
-      font-weight: 700;
-    }
-
-    .decor-pin {
-      position: absolute;
-      top: -15px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 35px;
-      height: 35px;
-      background: radial-gradient(circle at 30% 30%, #ff9ed8, #e91e8c);
-      border-radius: 50%;
-      box-shadow: 0 4px 10px rgba(233, 30, 140, 0.4), inset 0 2px 4px rgba(255, 255, 255, 0.6);
-      z-index: 12;
-    }
-
-    .decor-pin::after {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 12px;
-      height: 12px;
-      background: rgba(255, 255, 255, 0.4);
-      border-radius: 50%;
-    }
-
-    .nav-btn {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(255, 255, 255, 0.4);
-      backdrop-filter: blur(15px);
-      -webkit-backdrop-filter: blur(15px);
-      border: 1px solid rgba(255, 255, 255, 0.7);
-      color: var(--accent);
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      font-size: 24px;
-      cursor: pointer;
-      z-index: 20;
-      box-shadow: 0 8px 32px 0 rgba(233, 30, 140, 0.15);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.3s ease;
-    }
-
-    .nav-btn:hover {
-      background: white;
-      transform: translateY(-50%) scale(1.1);
-      box-shadow: 0 8px 25px rgba(233, 30, 140, 0.3);
-    }
-
-    .nav-btn.left {
-      left: 5px;
-    }
-
-    .nav-btn.right {
-      right: 5px;
-    }
-
-    @media(max-width: 767px) {
-      .slideshow-wrapper {
-        height: 62vh;
-        margin-top: 10px;
-      }
-      
-      .slide {
-        padding: 12px 12px 20px 12px;
-        width: 85vw;
-        border-radius: 16px;
-        box-shadow: 0 8px 25px rgba(233, 30, 140, 0.2);
-      }
-      
-      .slide img, .slide video {
-        height: 48vh;
-        object-fit: contain;
-        background: #ffe4ef;
-        border-radius: 8px;
-      }
-      
-      .caption {
-        font-size: 26px;
-        margin-top: 12px;
-      }
-
-      .nav-btn {
-        width: 46px;
-        height: 46px;
-        font-size: 22px;
-        background: rgba(255, 255, 255, 0.9);
-        box-shadow: 0 4px 15px rgba(233, 30, 140, 0.3);
-      }
-      
-      .nav-btn.left { left: 5px; }
-      .nav-btn.right { right: 5px; }
-
-      .back-btn {
-        top: 25px;
-        left: 20px;
-        padding: 10px 20px;
-        font-size: 15px;
-        box-shadow: 0 4px 15px rgba(233, 30, 140, 0.2);
-      }
-
-      .music-control {
-        top: 25px;
-        right: 20px;
-        padding: 10px 20px;
-        font-size: 15px;
-        box-shadow: 0 4px 15px rgba(233, 30, 140, 0.2);
-      }
-
-      /* Center Envelope Button completely at the bottom */
-      .secret-env-btn {
-        width: 70px;
-        height: 70px;
-        font-size: 32px;
-        bottom: 30px;
-        left: 50%;
-        margin-left: -35px; /* Half of width to center without using transform */
-        right: auto;
-        z-index: 200;
-        box-shadow: 0 8px 30px rgba(233, 30, 140, 0.4);
-      }
-
-      .progress-bar {
-        display: none !important; /* Hide cluttered dots on mobile */
-      }
-      
-      .love-letter-content {
-        padding: 35px 25px;
-        width: 90%;
-        max-height: 80vh;
-        overflow-y: auto;
-        border-radius: 24px;
-      }
-      
-      .letter-title { font-size: 32px; margin-bottom: 15px; }
-      .letter-body { font-size: 16px; }
-      
-      .start-card { padding: 40px 25px; width: 85%; }
-      .start-card h2 { font-size: 40px !important; }
-      .start-card p { font-size: 18px !important; }
-    }
-
-    @media(min-width: 768px) {
-      .nav-btn.left {
-        left: -60px;
-      }
-
-      .nav-btn.right {
-        right: -60px;
-      }
-    }
-
-
-    .progress-bar {
-      position: absolute;
-      bottom: 25px;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      width: 90%;
-      gap: 12px;
-      z-index: 100;
-    }
-
-    .dot {
-      font-size: 16px;
-      opacity: 0.4;
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      cursor: pointer;
-      filter: grayscale(100%);
-      transform: scale(0.8);
-    }
-
-    .dot.active {
-      opacity: 1;
-      transform: scale(1.4);
-      filter: none;
-      text-shadow: 0 0 10px rgba(233, 30, 140, 0.6);
-    }
-
-    /* Special Saymuu Letter Button */
     .secret-env-btn {
-      position: absolute;
+      position: fixed;
       bottom: 25px;
       right: 25px;
       background: linear-gradient(135deg, #ffb3e0, #e91e8c);
@@ -470,7 +218,7 @@
       justify-content: center;
       font-size: 28px;
       cursor: pointer;
-      z-index: 150;
+      z-index: 1000;
       box-shadow: 0 5px 20px rgba(233, 30, 140, 0.4), 0 0 15px rgba(255, 180, 220, 0.6);
       animation: envPulse 2s infinite;
       transition: all 0.3s ease;
@@ -482,17 +230,59 @@
     }
 
     @keyframes envPulse {
-
-      0%,
-      100% {
+      0%, 100% {
         transform: scale(1);
         box-shadow: 0 5px 20px rgba(233, 30, 140, 0.4);
       }
-
       50% {
         transform: scale(1.08);
         box-shadow: 0 5px 30px rgba(233, 30, 140, 0.7);
       }
+    }
+
+    @media(max-width: 767px) {
+      .back-btn {
+        top: 15px;
+        left: 15px;
+        padding: 8px 16px;
+        font-size: 14px;
+        box-shadow: 0 4px 15px rgba(233, 30, 140, 0.2);
+      }
+
+      .music-control {
+        top: 15px;
+        right: 15px;
+        padding: 8px 16px;
+        font-size: 14px;
+        box-shadow: 0 4px 15px rgba(233, 30, 140, 0.2);
+      }
+
+      .secret-env-btn {
+        width: 60px;
+        height: 60px;
+        font-size: 28px;
+        bottom: 25px;
+        left: 50%;
+        margin-left: -30px;
+        right: auto;
+        z-index: 1000;
+        box-shadow: 0 8px 30px rgba(233, 30, 140, 0.4);
+      }
+
+      .love-letter-content {
+        padding: 35px 20px;
+        width: 90%;
+        max-height: 80vh;
+        overflow-y: auto;
+        border-radius: 20px;
+      }
+      
+      .letter-title { font-size: 28px; margin-bottom: 12px; }
+      .letter-body { font-size: 15px; }
+      
+      .start-card { padding: 35px 20px; width: 85%; }
+      .start-card h2 { font-size: 36px !important; }
+      .start-card p { font-size: 16px !important; }
     }
 
     /* Love Letter Modal */
@@ -650,16 +440,20 @@
     <source src="assets/song1.mp3" type="audio/mpeg">
   </audio>
 
-  <div class="slideshow-wrapper">
-    <button class="nav-btn left" id="prev-btn">❮</button>
-    <div id="slideshow"
-      style="position: relative; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
-      <!-- Slides will be injected by JS -->
+  <div class="gallery-wrap" id="gallery-wrap" style="display:none; padding-top: 80px; padding-bottom: 120px; width: 100%;">
+    <h2 class="section-title" style="font-size: clamp(36px, 8vw, 56px); margin-bottom: 30px; text-shadow: 0 4px 15px rgba(255,255,255,0.8);">Our Beautiful Memories 🌸</h2>
+    <div class="polaroids-grid" id="polaroids-grid">
+      <!-- Grid items injected by JS -->
     </div>
-    <button class="nav-btn right" id="next-btn">❯</button>
   </div>
 
-  <div class="progress-bar" id="progress-bar"></div>
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox">
+    <button class="lb-close" id="lb-close">✖</button>
+    <img src="" alt="Memory" class="lb-img" id="lb-img">
+    <video src="" class="lb-img" id="lb-vid" controls style="display:none;"></video>
+    <div class="lb-cap" id="lb-cap"></div>
+  </div>
 
   <!-- Special Envelope for Saymuu -->
   <button class="secret-env-btn" id="secret-env-btn">💌</button>
@@ -716,115 +510,62 @@
       { src: 'assets/video1.mp4', caption: 'A special memory 🎥' }
     ];
 
-    const slideshowContainer = document.getElementById('slideshow');
-    const progressBar = document.getElementById('progress-bar');
+    const gridContainer = document.getElementById('polaroids-grid');
+    const lb = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lb-img');
+    const lbVid = document.getElementById('lb-vid');
+    const lbCap = document.getElementById('lb-cap');
+    const lbClose = document.getElementById('lb-close');
 
-    // Inject slides
+    // Inject slides into masonry grid
     slidesData.forEach((data, index) => {
-      const slide = document.createElement('div');
-      slide.className = `slide ${index === 0 ? 'active' : ''}`;
-
-      // Add random slight rotation for polaroid effect
-      const randomRotation = (Math.random() * 6 - 3).toFixed(1);
-      if (index === 0) {
-        slide.style.transform = `scale(1) translateY(0) rotate(${randomRotation}deg)`;
-      }
-      slide.dataset.rotation = randomRotation;
-
+      const pContainer = document.createElement('div');
+      pContainer.className = 'polaroid-container';
+      
       let mediaHTML = '';
       if (data.src.endsWith('.mp4')) {
-        mediaHTML = `<video src="${data.src}" preload="metadata" loop muted playsinline poster="assets/BdayPic.png"></video>`;
+        mediaHTML = `<video src="${data.src}" class="pol-img" loop muted playsinline poster="assets/BdayPic.png"></video>`;
       } else {
-        mediaHTML = `<img src="${data.src}" alt="Memory" loading="lazy">`;
+        mediaHTML = `<img src="${data.src}" alt="Memory" class="pol-img" loading="lazy">`;
       }
 
-      slide.innerHTML = `
-      <div class="decor-pin"></div>
-      ${mediaHTML}
-      <div class="caption">${data.caption}</div>
-    `;
-      slideshowContainer.appendChild(slide);
-
-      // Inject dots (now hearts)
-      const dot = document.createElement('div');
-      dot.className = `dot ${index === 0 ? 'active' : ''}`;
-      dot.innerHTML = '💗';
-      dot.addEventListener('click', () => {
-        const direction = index > currentSlide ? 'next' : 'prev';
-        updateSlides(index, direction);
-      });
-      progressBar.appendChild(dot);
-    });
-
-    const slides = document.querySelectorAll('.slide');
-    const dots = document.querySelectorAll('.dot');
-    let currentSlide = 0;
-    let slideInterval;
-
-    function updateSlides(newIndex, direction) {
-      if (newIndex === currentSlide) return;
-
-      slides.forEach((slide, index) => {
-        slide.classList.remove('active', 'prev', 'next');
-        slide.style.transform = ''; // Reset inline transform
-
-        if (index === newIndex) {
-          slide.classList.add('active');
-          slide.style.transform = `scale(1) translateY(0) rotate(${slide.dataset.rotation}deg)`;
-          const vid = slide.querySelector('video');
-          if (vid) vid.play().catch(e => console.log('Video play error:', e));
-        } else if (index === currentSlide) {
-          slide.classList.add(direction === 'next' ? 'prev' : 'next');
-          const vid = slide.querySelector('video');
-          if (vid) vid.pause();
+      pContainer.innerHTML = `
+        <div class="polaroid-inner">
+          <div class="polaroid-front">
+            ${mediaHTML}
+            <div class="pol-caption">${data.caption}</div>
+          </div>
+        </div>
+      `;
+      
+      pContainer.addEventListener('click', () => {
+        lb.classList.add('active');
+        lbCap.innerText = data.caption;
+        if(data.src.endsWith('.mp4')){
+          lbImg.style.display = 'none';
+          lbVid.style.display = 'block';
+          lbVid.src = data.src;
+          lbVid.play().catch(e => console.log('Video play error:', e));
         } else {
-          // Pause any other videos just in case
-          const vid = slide.querySelector('video');
-          if (vid) vid.pause();
+          lbVid.style.display = 'none';
+          lbImg.style.display = 'block';
+          lbImg.src = data.src;
         }
       });
-
-      dots.forEach((dot, index) => {
-        dot.classList.toggle('active', index === newIndex);
-      });
-
-      currentSlide = newIndex;
-
-      // Reset interval if manually changed
-      if (slideInterval) {
-        clearInterval(slideInterval);
-        startSlideshow();
-      }
-    }
-
-    function nextSlide() {
-      const newIndex = (currentSlide + 1) % slides.length;
-      updateSlides(newIndex, 'next');
-    }
-
-    function prevSlide() {
-      const newIndex = (currentSlide - 1 + slides.length) % slides.length;
-      updateSlides(newIndex, 'prev');
-    }
-
-    function startSlideshow() {
-      slideInterval = setInterval(nextSlide, 3500);
-    }
-
-    document.getElementById('next-btn').addEventListener('click', nextSlide);
-    document.getElementById('prev-btn').addEventListener('click', prevSlide);
-
-    // Swipe support for mobile
-    let touchStartX = 0;
-    let touchEndX = 0;
-
-    slideshowContainer.addEventListener('touchstart', e => {
-      touchStartX = e.changedTouches[0].screenX;
+      
+      gridContainer.appendChild(pContainer);
     });
-    slideshowContainer.addEventListener('touchend', e => {
-      touchEndX = e.changedTouches[0].screenX;
-      if (touchEndX < touchStartX - 50) nextSlide();
-      if (touchEndX > touchStartX + 50) prevSlide();
+
+    lbClose.addEventListener('click', () => {
+      lb.classList.remove('active');
+      lbVid.pause();
+    });
+    
+    lb.addEventListener('click', (e) => {
+      if(e.target === lb) {
+        lb.classList.remove('active');
+        lbVid.pause();
+      }
     });
 
     // Audio and Overlay Logic
@@ -832,13 +573,22 @@
     const startBtn = document.getElementById('start-btn');
     const music = document.getElementById('bg-music');
     const musicBtn = document.getElementById('music-btn');
+    const galleryWrap = document.getElementById('gallery-wrap');
     let isPlaying = true;
 
     startBtn.addEventListener('click', () => {
       overlay.style.opacity = '0';
       setTimeout(() => { overlay.style.display = 'none'; }, 500);
       music.play().catch(e => console.log('Audio play error:', e));
-      startSlideshow();
+      galleryWrap.style.display = 'block';
+      
+      // Auto-play videos silently
+      document.querySelectorAll('.pol-img').forEach(el => {
+        if(el.tagName === 'VIDEO') {
+          el.play().catch(e => console.log('Auto-play error', e));
+        }
+      });
+      
       startCherryBlossomRain();
     });
 
