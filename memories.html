@@ -307,7 +307,7 @@ slidesData.forEach(function(data, i) {
   var isVid = data.src.indexOf('.mp4') !== -1;
   var inner = '';
   if (isVid) {
-    inner = '<video src="' + data.src + '" loop muted playsinline poster="assets/BdayPic.png"></video>'
+    inner = '<video src="' + data.src + '#t=0.001" preload="metadata" loop muted playsinline></video>'
           + '<div class="video-badge">&#9654; Video</div>';
   } else {
     inner = '<img src="' + data.src + '" alt="' + data.caption + '" loading="lazy">';
