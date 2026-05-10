@@ -414,6 +414,256 @@
         transform: scale(0.5) translateY(20px);
       }
     }
+
+    /* ===== MOBILE OVERFLOW FIX ===== */
+
+    /* Contain orbs so they never cause horizontal scroll */
+    body {
+      position: relative;
+    }
+    .glowing-orb {
+      position: fixed !important; /* fixed = relative to viewport, never causes scroll */
+      max-width: 60vw;
+      max-height: 60vw;
+    }
+    .orb-1 { width: min(300px, 55vw); height: min(300px, 55vw); }
+    .orb-2 { width: min(250px, 45vw); height: min(250px, 45vw); }
+    .orb-3 { width: min(200px, 40vw); height: min(200px, 40vw); }
+
+    /* Floating bg container — must not overflow */
+    #floating-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+    .petal {
+      position: absolute;
+      max-width: 30px;
+    }
+
+    /* Gallery wrap — full width, no side overflow */
+    .gallery-wrap {
+      width: 100% !important;
+      max-width: 100vw !important;
+      overflow-x: hidden !important;
+      padding-left: 12px !important;
+      padding-right: 12px !important;
+      box-sizing: border-box !important;
+    }
+
+    /* Section title — prevent it from pushing width */
+    .section-title {
+      max-width: calc(100vw - 24px);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      left: 0 !important;
+      transform: none !important;
+      display: block !important;
+      text-align: center !important;
+    }
+
+    /* Polaroid grid — 2 cols on mobile, never overflow */
+    .polaroids-grid {
+      display: grid !important;
+      grid-template-columns: repeat(2, 1fr) !important;
+      gap: 14px !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      box-sizing: border-box !important;
+    }
+
+    /* Each polaroid container */
+    .polaroid-container {
+      width: 100% !important;
+      min-width: 0 !important;
+      box-sizing: border-box !important;
+      overflow: visible;
+    }
+
+    /* Polaroid inner white card */
+    .polaroid-inner {
+      background: #fff;
+      padding: 8px 8px 32px;
+      border-radius: 3px;
+      box-shadow: 0 4px 16px rgba(233,30,140,.13), 0 1px 4px rgba(0,0,0,.07);
+      width: 100% !important;
+      box-sizing: border-box !important;
+      cursor: pointer;
+      transition: transform .3s ease, box-shadow .3s ease;
+      position: relative;
+    }
+    .polaroid-inner:hover {
+      transform: translateY(-6px) scale(1.03);
+      box-shadow: 0 12px 30px rgba(233,30,140,.22);
+    }
+
+    /* Polaroid front — remove the old rotate that can cause clipping */
+    .polaroid-front {
+      background: transparent !important;
+      padding: 0 !important;
+      box-shadow: none !important;
+      border-radius: 0 !important;
+      position: relative;
+    }
+
+    /* Images fill the polaroid */
+    .pol-img {
+      width: 100% !important;
+      aspect-ratio: 3/4 !important;
+      object-fit: cover !important;
+      border-radius: 2px;
+      display: block;
+    }
+
+    /* Caption inside polaroid */
+    .pol-caption {
+      text-align: center;
+      font-family: 'Dancing Script', cursive;
+      font-size: 12px;
+      color: #c2185b;
+      position: absolute;
+      bottom: 6px;
+      left: 0; right: 0;
+      line-height: 1.2;
+      padding: 0 4px;
+    }
+
+    /* Tape decoration */
+    .pol-tape {
+      position: absolute;
+      top: -11px; left: 50%;
+      transform: translateX(-50%) rotate(-1.5deg);
+      width: 50px; height: 18px;
+      background: rgba(255,210,235,.72);
+      border-radius: 2px;
+      z-index: 2;
+    }
+
+    /* Overlay start card — full width safe */
+    .overlay-start {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 5000;
+      background: rgba(255,240,248,.85);
+      backdrop-filter: blur(16px);
+    }
+    .start-card {
+      background: rgba(255,255,255,.82);
+      border: 1.5px solid rgba(255,160,210,.35);
+      border-radius: 24px;
+      padding: 36px 28px;
+      text-align: center;
+      box-shadow: 0 8px 40px rgba(233,30,140,.18);
+      width: min(90vw, 420px);
+      box-sizing: border-box;
+    }
+    .start-btn {
+      display: inline-block;
+      padding: .9rem 2.2rem;
+      font-size: 1.05rem;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800;
+      background: linear-gradient(135deg,#e91e8c,#ff6bae);
+      color: white; border: none;
+      border-radius: 50px; cursor: pointer;
+      box-shadow: 0 8px 22px rgba(233,30,140,.38);
+      transition: transform .3s, box-shadow .3s;
+      letter-spacing: .5px;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .start-btn:hover { transform: scale(1.05) translateY(-3px); }
+
+    /* Lightbox — safe on all screens */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      background: rgba(20,0,14,.8);
+      backdrop-filter: blur(14px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 12px;
+      padding: 16px;
+      box-sizing: border-box;
+    }
+    .lightbox.active { display: flex; }
+    .lb-img {
+      max-width: min(92vw, 480px) !important;
+      max-height: 75vh !important;
+      border-radius: 14px;
+      border: 2px solid rgba(255,180,220,.5);
+      object-fit: contain;
+      animation: lbPop .3s ease;
+    }
+    @keyframes lbPop { from{transform:scale(.82);opacity:0;} to{transform:scale(1);opacity:1;} }
+    .lb-cap {
+      font-family: 'Dancing Script', cursive;
+      color: #ffb3e6; font-size: 1.2rem;
+      text-align: center;
+    }
+    .lb-close {
+      position: absolute;
+      top: 14px; right: 18px;
+      font-size: 2.2rem;
+      color: white;
+      background: none; border: none;
+      cursor: pointer; opacity: .85;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* Love letter modal — safe */
+    .love-letter-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255,240,250,.55);
+      backdrop-filter: blur(14px);
+    }
+    .love-letter-modal.active { display: flex; opacity: 1; pointer-events: all; }
+    .love-letter-content {
+      background: rgba(255,255,255,.88);
+      border: 1.5px solid rgba(255,170,215,.4);
+      border-radius: 24px;
+      padding: 32px 24px;
+      width: min(92vw, 700px);
+      max-height: 85vh;
+      overflow-y: auto;
+      box-shadow: 0 12px 48px rgba(233,30,140,.2);
+      position: relative;
+      box-sizing: border-box;
+    }
+
+    /* 3 col on tablet+ */
+    @media (min-width: 520px) {
+      .polaroids-grid {
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 18px !important;
+      }
+    }
+    @media (min-width: 900px) {
+      .polaroids-grid {
+        grid-template-columns: repeat(4, 1fr) !important;
+        gap: 22px !important;
+      }
+    }
+
+    /* Section title normal size on bigger screens */
+    @media (min-width: 600px) {
+      .section-title {
+        white-space: normal !important;
+      }
+    }
   </style>
 </head>
 
@@ -440,7 +690,7 @@
     <source src="assets/song1.mp3" type="audio/mpeg">
   </audio>
 
-  <div class="gallery-wrap" id="gallery-wrap" style="display:none; padding-top: 80px; padding-bottom: 120px; width: 100%;">
+  <div class="gallery-wrap" id="gallery-wrap" style="display:none; padding-top: 80px; padding-bottom: 120px;">
     <h2 class="section-title" style="font-size: clamp(36px, 8vw, 56px); margin-bottom: 30px; text-shadow: 0 4px 15px rgba(255,255,255,0.8);">Our Beautiful Memories 🌸</h2>
     <div class="polaroids-grid" id="polaroids-grid">
       <!-- Grid items injected by JS -->
