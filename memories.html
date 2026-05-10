@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script>
+    // The "No Peeking" Lock: Active!
+    const targetDate = new Date("2026-05-11T00:00:00").getTime();
+    if (new Date().getTime() < targetDate) {
+      window.location.href = 'countdown.html';
+    }
+  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
   <title>Our Memories 🌸</title>
