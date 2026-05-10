@@ -405,38 +405,48 @@ function initGamifiedFeatures() {
 
     function typeMessage() {
         const htmlContent = originalMessage.innerHTML;
-        // Split by <br><br> to get logical paragraphs
-        const paragraphs = htmlContent.split('<br><br>');
         typewriterText.innerHTML = '';
         
-        paragraphs.forEach((pText, index) => {
-            if(!pText.trim()) return;
-            const p = document.createElement('div');
-            p.innerHTML = pText;
-            // Initial state for animation
-            p.style.opacity = '0';
-            p.style.transform = 'translateY(15px)';
-            p.style.filter = 'blur(4px)';
-            p.style.transition = 'all 1s cubic-bezier(0.22, 1, 0.36, 1)';
-            p.style.marginBottom = '1.2em';
-            p.style.lineHeight = '1.6';
-            
-            typewriterText.appendChild(p);
-            
-            // Trigger animation with staggered delay
-            setTimeout(() => {
-                p.style.opacity = '1';
-                p.style.transform = 'translateY(0)';
-                p.style.filter = 'blur(0)';
-            }, 600 + (index * 1200)); // Wait 600ms, then stagger each by 1.2s
+        // Split content by <br> tags to preserve line breaks
+        const fragments = htmlContent.split(/(<br\s*\/?>)/gi);
+        let wordSpans = [];
+
+        fragments.forEach(frag => {
+            if (frag.toLowerCase().startsWith('<br')) {
+                typewriterText.appendChild(document.createElement('br'));
+            } else {
+                // Split by spaces to get individual words
+                const words = frag.split(' ');
+                words.forEach(word => {
+                    if (!word.trim()) return;
+                    const span = document.createElement('span');
+                    span.innerHTML = word + '&nbsp;'; // Add trailing space
+                    span.style.opacity = '0';
+                    span.style.display = 'inline-block';
+                    span.style.transform = 'translateY(12px)';
+                    span.style.filter = 'blur(3px)';
+                    typewriterText.appendChild(span);
+                    wordSpans.push(span);
+                });
+            }
         });
-        
-        // Show signature at the very end
-        setTimeout(() => {
-            typewriterText.classList.add('done');
-            signature.style.opacity = '1';
-            signature.style.transition = 'opacity 2s ease';
-        }, 600 + (paragraphs.length * 1200) + 500);
+
+        // Use GSAP to animate the words beautifully
+        if (typeof gsap !== 'undefined') {
+            gsap.to(wordSpans, {
+                opacity: 1,
+                y: 0,
+                filter: 'blur(0px)',
+                duration: 0.8,
+                stagger: 0.08, // 80ms delay between words
+                ease: "back.out(1.2)",
+                onComplete: () => {
+                    typewriterText.classList.add('done');
+                    signature.style.opacity = '1';
+                    signature.style.transition = 'opacity 2s ease';
+                }
+            });
+        }
     }
 }
 
