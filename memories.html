@@ -326,96 +326,88 @@
     }
 
     @media(max-width: 767px) {
-      .nav-btn {
-        width: 36px;
-        height: 36px;
-        font-size: 16px;
-        background: rgba(255, 255, 255, 0.75);
-      }
-
-      .nav-btn.left {
-        left: 5px;
-      }
-
-      .nav-btn.right {
-        right: 5px;
-      }
-
-      .letter-title {
-        font-size: 24px;
-      }
-      
-      .letter-body {
-        font-size: 14px;
-      }
-      
-      .love-letter-content {
-        padding: 20px 15px;
-        width: 95%;
-        max-height: 85vh;
-        overflow-y: auto;
-      }
-
-      .music-control {
-        top: 10px;
-        right: 10px;
-        padding: 6px 12px;
-        font-size: 12px;
-      }
-
-      .back-btn {
-        top: 10px;
-        left: 10px;
-        padding: 6px 12px;
-        font-size: 12px;
-      }
-
       .slideshow-wrapper {
-        height: 65vh;
-        margin-top: 20px;
-      }
-      
-      .progress-bar {
-        bottom: 10px;
-        gap: 4px;
-        max-width: 95%;
-      }
-      
-      .dot {
-        font-size: 10px;
-      }
-      
-      .secret-env-btn {
-        width: 45px;
-        height: 45px;
-        font-size: 20px;
-        bottom: 50px;
-        right: 15px;
-        z-index: 200;
+        height: 62vh;
+        margin-top: 10px;
       }
       
       .slide {
-        padding: 8px 8px 15px 8px;
-        width: 95vw;
+        padding: 12px 12px 20px 12px;
+        width: 85vw;
+        border-radius: 16px;
+        box-shadow: 0 8px 25px rgba(233, 30, 140, 0.2);
       }
       
       .slide img, .slide video {
-        height: 50vh;
+        height: 48vh;
         object-fit: contain;
+        background: #ffe4ef;
+        border-radius: 8px;
       }
       
       .caption {
-        font-size: 20px;
-        margin-top: 8px;
+        font-size: 26px;
+        margin-top: 12px;
+      }
+
+      .nav-btn {
+        width: 46px;
+        height: 46px;
+        font-size: 22px;
+        background: rgba(255, 255, 255, 0.9);
+        box-shadow: 0 4px 15px rgba(233, 30, 140, 0.3);
       }
       
-      .start-card {
-         padding: 25px 15px;
+      .nav-btn.left { left: 5px; }
+      .nav-btn.right { right: 5px; }
+
+      .back-btn {
+        top: 25px;
+        left: 20px;
+        padding: 10px 20px;
+        font-size: 15px;
+        box-shadow: 0 4px 15px rgba(233, 30, 140, 0.2);
+      }
+
+      .music-control {
+        top: 25px;
+        right: 20px;
+        padding: 10px 20px;
+        font-size: 15px;
+        box-shadow: 0 4px 15px rgba(233, 30, 140, 0.2);
+      }
+
+      /* Center Envelope Button completely at the bottom */
+      .secret-env-btn {
+        width: 70px;
+        height: 70px;
+        font-size: 32px;
+        bottom: 30px;
+        left: 50%;
+        margin-left: -35px; /* Half of width to center without using transform */
+        right: auto;
+        z-index: 200;
+        box-shadow: 0 8px 30px rgba(233, 30, 140, 0.4);
+      }
+
+      .progress-bar {
+        display: none !important; /* Hide cluttered dots on mobile */
       }
       
-      .start-card h2 {
-         font-size: 30px !important;
+      .love-letter-content {
+        padding: 35px 25px;
+        width: 90%;
+        max-height: 80vh;
+        overflow-y: auto;
+        border-radius: 24px;
       }
+      
+      .letter-title { font-size: 32px; margin-bottom: 15px; }
+      .letter-body { font-size: 16px; }
+      
+      .start-card { padding: 40px 25px; width: 85%; }
+      .start-card h2 { font-size: 40px !important; }
+      .start-card p { font-size: 18px !important; }
     }
 
     @media(min-width: 768px) {
