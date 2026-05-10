@@ -2,139 +2,232 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Waiting for Saymuu's Birthday...</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌸</text></svg>">
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
   <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { height: 100%; }
+
     body {
-      margin: 0;
-      padding: 0;
-      min-height: 100vh;
+      width: 100%; height: 100%;
+      position: fixed; inset: 0;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
-      background: linear-gradient(135deg, #ffe0ef, #ffcce0);
-      font-family: 'Nunito', 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif;
       overflow: hidden;
-      animation: pageFadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      background: linear-gradient(-45deg, #ffe0ef, #ffcce0, #ffd6ec, #ffb3e0);
+      background-size: 400% 400%;
+      font-family: 'Nunito', 'Apple Color Emoji', 'Segoe UI Emoji', sans-serif;
+      animation: gradientBG 12s ease infinite;
+      -webkit-tap-highlight-color: transparent;
     }
 
-    @keyframes pageFadeIn {
-      from { opacity: 0; filter: blur(15px); transform: scale(1.02); }
-      to { opacity: 1; filter: blur(0); transform: scale(1); }
+    @keyframes gradientBG {
+      0%, 100% { background-position: 0% 50%; }
+      50%       { background-position: 100% 50%; }
     }
 
-    .countdown-container {
-      background: rgba(255, 255, 255, 0.4);
-      backdrop-filter: blur(25px);
-      -webkit-backdrop-filter: blur(25px);
-      padding: 40px;
-      border-radius: 30px;
-      border: 1px solid rgba(255, 255, 255, 0.7);
-      box-shadow: 0 8px 32px 0 rgba(233, 30, 140, 0.2);
-      text-align: center;
+    /* ── Floating emojis ── */
+    .floats {
+      position: fixed; inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 1;
+    }
+    .heart-float {
+      position: absolute;
+      bottom: -12vh;
+      animation: floatUp linear infinite;
+      opacity: 0.7;
+      user-select: none;
+      pointer-events: auto;
+      cursor: pointer;
+      will-change: transform;
+      line-height: 1;
+      touch-action: manipulation;
+    }
+    @keyframes floatUp {
+      0%   { transform: translateY(0)      rotate(-8deg)  scale(0.8); opacity: 0;   }
+      8%   { opacity: 0.7; }
+      90%  { opacity: 0.7; }
+      100% { transform: translateY(-112vh) rotate(12deg)  scale(1.1); opacity: 0;   }
+    }
+    .heart-float.pop {
+      animation: popBurst 0.32s cubic-bezier(.175,.885,.32,1.275) forwards;
+      pointer-events: none;
+    }
+    @keyframes popBurst {
+      0%   { transform: scale(1);   opacity: 0.7; }
+      50%  { transform: scale(2.2); opacity: 1;   }
+      100% { transform: scale(0);   opacity: 0;   }
+    }
+
+    /* ── Music button ── */
+    .music-btn {
+      position: fixed;
+      top: max(14px, env(safe-area-inset-top, 14px));
+      right: max(14px, env(safe-area-inset-right, 14px));
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 9px 16px;
+      background: rgba(255,255,255,0.5);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.85);
+      border-radius: 50px;
+      cursor: pointer;
+      font-family: 'Nunito', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: #c2185b;
+      box-shadow: 0 4px 18px rgba(233,30,140,0.13);
+      transition: transform 0.2s, box-shadow 0.2s;
+      touch-action: manipulation;
+    }
+    .music-btn:active { transform: scale(0.95); }
+
+    .bars { display: flex; align-items: flex-end; gap: 2px; height: 15px; }
+    .bar  { width: 3px; background: #e91e8c; border-radius: 2px; height: 5px; }
+    .music-btn.playing .bar:nth-child(1) { animation: barDance .55s 0.0s ease-in-out infinite alternate; }
+    .music-btn.playing .bar:nth-child(2) { animation: barDance .55s 0.18s ease-in-out infinite alternate; }
+    .music-btn.playing .bar:nth-child(3) { animation: barDance .55s 0.36s ease-in-out infinite alternate; }
+    @keyframes barDance { from { height: 4px; } to { height: 15px; } }
+
+    /* ── Card ── */
+    .card {
+      position: relative;
       z-index: 10;
-      transform: scale(0.9);
-      animation: popIn 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-      max-width: 90%;
-      box-sizing: border-box;
-      width: 100%;
-    }
+      background: rgba(255,255,255,0.4);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      border: 1px solid rgba(255,255,255,0.88);
+      border-radius: 32px;
+      text-align: center;
+      animation: popIn 0.85s cubic-bezier(.175,.885,.32,1.275) both;
 
+      /* ── fluid sizing: fills most of the screen on mobile, capped on desktop ── */
+      width: min(480px, 90vw);
+      padding: clamp(24px, 6vw, 48px) clamp(18px, 6vw, 44px);
+
+      box-shadow:
+        inset 0 1.5px 0 rgba(255,255,255,0.9),
+        0 16px 40px rgba(233,30,140,0.15);
+    }
     @keyframes popIn {
-      to { transform: scale(1); }
+      from { transform: scale(0.86); opacity: 0; }
+      to   { transform: scale(1);    opacity: 1; }
     }
 
+    /* ── Title ── */
     .title {
       font-family: 'Dancing Script', cursive;
-      font-size: 48px;
-      color: var(--accent);
-      margin-bottom: 30px;
-      text-shadow: 0 2px 10px rgba(233, 30, 140, 0.2);
+      /* mobile-first: 7.5vw → never below 26px, never above 48px */
+      font-size: clamp(26px, 7.5vw, 48px);
+      color: #c2185b;
+      line-height: 1.2;
+      margin-bottom: clamp(18px, 5vw, 34px);
+      text-shadow: 0 2px 12px rgba(233,30,140,0.18);
+      word-break: keep-all;
     }
 
+    /* ── Timer grid ── */
     .timer {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: clamp(6px, 2.5vw, 14px);
     }
 
     .time-box {
-      background: rgba(255, 255, 255, 0.6);
-      backdrop-filter: blur(15px);
-      -webkit-backdrop-filter: blur(15px);
-      padding: 15px 20px;
+      background: rgba(255,255,255,0.62);
+      border: 1px solid rgba(255,255,255,0.92);
+      border-bottom: 3px solid rgba(233,30,140,0.2);
       border-radius: 20px;
-      width: 75px;
-      box-shadow: 0 8px 32px 0 rgba(233, 30, 140, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.8);
+      /* vertical padding scales with viewport; horizontal stays tight */
+      padding: clamp(12px, 3.5vw, 22px) 4px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
+      gap: 5px;
+      transition: transform 0.25s cubic-bezier(.175,.885,.32,1.275), box-shadow 0.25s;
+    }
+    /* hover only on non-touch */
+    @media (hover: hover) {
+      .time-box:hover {
+        transform: translateY(-4px) scale(1.03);
+        box-shadow: 0 10px 30px rgba(233,30,140,0.2);
+      }
     }
 
     .time-val {
-      display: block;
-      font-size: 36px;
+      /* 9vw looks great on phones; capped at 42px on large screens */
+      font-size: clamp(28px, 9vw, 42px);
       font-weight: 800;
-      color: var(--accent2);
+      color: #ad1457;
       line-height: 1;
-      margin-bottom: 5px;
       font-variant-numeric: tabular-nums;
-      width: 100%;
+    }
+    .time-val.pulse {
+      animation: numPulse 0.36s cubic-bezier(.175,.885,.32,1.275);
+    }
+    @keyframes numPulse {
+      0%   { transform: scale(1);    color: #ad1457; }
+      50%  { transform: scale(1.2);  color: #e91e8c; }
+      100% { transform: scale(1);    color: #ad1457; }
     }
 
     .time-label {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--deep);
+      font-size: clamp(9px, 2.2vw, 12px);
+      font-weight: 700;
+      color: #880e4f;
       text-transform: uppercase;
-      letter-spacing: 1px;
-      opacity: 0.8;
+      letter-spacing: 1.2px;
+      opacity: 0.78;
     }
 
-    .heart-float {
-      position: absolute;
-      font-size: 30px;
-      animation: floatUp 6s linear infinite;
-      opacity: 0.6;
-      z-index: 1;
+    /* ── Subtitle ── */
+    .subtitle {
+      margin-top: clamp(14px, 4vw, 26px);
+      font-size: clamp(12px, 3vw, 15px);
+      color: #c2185b;
+      opacity: 0.72;
+      font-weight: 600;
+      letter-spacing: 0.3px;
     }
 
-    @keyframes floatUp {
-      0% { transform: translateY(100vh) scale(0.5); opacity: 0; }
-      20% { opacity: 0.6; }
-      80% { opacity: 0.6; }
-      100% { transform: translateY(-20vh) scale(1.2); opacity: 0; }
-    }
-
-    @media (max-width: 600px) {
-      .countdown-container { padding: 25px 15px; border-radius: 20px; }
-      .timer { gap: 10px; flex-wrap: wrap; }
-      .time-box { padding: 10px; min-width: 0; flex: 1 1 40%; box-sizing: border-box; }
-      .time-val { font-size: 28px; margin-bottom: 2px; }
-      .time-label { font-size: 12px; }
-      .title { font-size: 32px; margin-bottom: 20px; }
+    /* ── Very small phones (≤360px) extra tightening ── */
+    @media (max-width: 360px) {
+      .card { border-radius: 26px; }
+      .time-box { border-radius: 16px; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Floating Hearts Background -->
-  <div id="floating-hearts"></div>
+  <div class="floats" id="floats"></div>
 
-  <!-- Anticipation Music -->
   <audio id="bg-music" loop>
     <source src="assets/song1.mp3" type="audio/mpeg">
   </audio>
-  <button id="music-btn" style="position: absolute; top: 20px; right: 20px; background: rgba(255,255,255,0.7); backdrop-filter: blur(5px); border: 1px solid rgba(233,30,140,0.3); color: var(--accent); padding: 10px 20px; border-radius: 30px; font-family: 'Nunito', sans-serif; font-weight: bold; cursor: pointer; z-index: 100; box-shadow: 0 4px 10px rgba(233,30,140,0.1); transition: all 0.3s ease;">🎵 Play Music</button>
 
-  <div class="countdown-container">
-    <h1 class="title">Saymuu's Birthday In... ✨</h1>
-    <div class="timer">
+  <button class="music-btn" id="music-btn" aria-label="Play music">
+    <div class="bars">
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+    </div>
+    <span id="music-label">Play Music</span>
+  </button>
+
+  <div class="card">
+    <h1 class="title">Saymuu's Birthday In ✨</h1>
+
+    <div class="timer" id="timer">
       <div class="time-box">
         <span class="time-val" id="days">00</span>
         <span class="time-label">Days</span>
@@ -152,70 +245,97 @@
         <span class="time-label">Secs</span>
       </div>
     </div>
+
+    <p class="subtitle">🌸 Something special is almost here... 🎀</p>
   </div>
 
   <script>
-    // Music Controls
+    // Music
     const musicBtn = document.getElementById('music-btn');
-    const bgMusic = document.getElementById('bg-music');
-    let isPlaying = false;
+    const bgMusic  = document.getElementById('bg-music');
+    const label    = document.getElementById('music-label');
+    let playing = false;
 
     musicBtn.addEventListener('click', () => {
-      if (isPlaying) {
-        bgMusic.pause();
-        musicBtn.innerHTML = '🎵 Play Music';
-      } else {
-        bgMusic.play();
-        musicBtn.innerHTML = '🎶 Pause Music';
-      }
-      isPlaying = !isPlaying;
+      playing ? bgMusic.pause() : bgMusic.play();
+      playing = !playing;
+      musicBtn.classList.toggle('playing', playing);
+      label.textContent = playing ? 'Pause Music' : 'Play Music';
     });
 
-    // Set the EXACT birthday date and time (Midnight of May 11th, 2026)
-    const targetDate = new Date("2026-05-11T00:00:00").getTime();
+    // Countdown
+    const target = new Date('2026-05-11T00:00:00').getTime();
 
-    function updateCountdown() {
-      const now = new Date().getTime();
-      const difference = targetDate - now;
-
-      // If the countdown is finished, redirect to main page!
-      if (difference <= 0) {
-        window.location.href = 'index.html';
-        return;
+    function setVal(id, val) {
+      const el = document.getElementById(id);
+      const s  = val.toString().padStart(2, '0');
+      if (el.textContent !== s) {
+        el.textContent = s;
+        el.classList.remove('pulse');
+        void el.offsetWidth;
+        el.classList.add('pulse');
       }
-
-      // Time calculations
-      const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((difference % (1000 * 60)) / 1000);
-
-      // Update UI with leading zeros
-      document.getElementById('days').innerText = days.toString().padStart(2, '0');
-      document.getElementById('hours').innerText = hours.toString().padStart(2, '0');
-      document.getElementById('minutes').innerText = minutes.toString().padStart(2, '0');
-      document.getElementById('seconds').innerText = seconds.toString().padStart(2, '0');
     }
 
-    // Run every second
-    setInterval(updateCountdown, 1000);
-    updateCountdown(); // Run immediately on load
-
-    // Create floating background hearts
-    const heartsContainer = document.getElementById('floating-hearts');
-    const emojis = ['💖', '🌸', '✨', '🎀', '🧸'];
-    
-    for(let i=0; i<20; i++) {
-        let el = document.createElement('div');
-        el.className = 'heart-float';
-        el.innerText = emojis[Math.floor(Math.random() * emojis.length)];
-        el.style.left = Math.random() * 90 + 'vw';
-        el.style.animationDuration = (Math.random() * 5 + 4) + 's';
-        el.style.animationDelay = (Math.random() * 5) + 's';
-        let size = Math.random() * 20 + 20;
-        el.style.fontSize = size + 'px';
-        heartsContainer.appendChild(el);
+    function tick() {
+      const diff = target - Date.now();
+      if (diff <= 0) { window.location.href = 'index.html'; return; }
+      setVal('days',    Math.floor(diff / 86400000));
+      setVal('hours',   Math.floor((diff % 86400000) / 3600000));
+      setVal('minutes', Math.floor((diff % 3600000)  / 60000));
+      setVal('seconds', Math.floor((diff % 60000)    / 1000));
     }
+
+    setInterval(tick, 1000);
+    tick();
+
+    // Floating emojis
+    const floats  = document.getElementById('floats');
+    const emojis  = ['💖', '🌸', '✨', '🎀', '🧸', '🎂', '🎉', '💕', '🌷'];
+    const COUNT   = 22;
+
+    function makeFloat() {
+      const el = document.createElement('span');
+      el.className = 'heart-float';
+      el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      const size = Math.random() * 22 + 18;
+      el.style.cssText = `
+        font-size: ${size}px;
+        left: ${Math.random() * 96}vw;
+        animation-duration: ${Math.random() * 7 + 6}s;
+        animation-delay: ${Math.random() * 6}s;
+      `;
+
+      el.addEventListener('click', () => {
+        el.classList.add('pop');
+        el.addEventListener('animationend', () => {
+          el.remove();
+          spawnOne();
+        }, { once: true });
+      });
+
+      floats.appendChild(el);
+    }
+
+    function spawnOne() {
+      const el = document.createElement('span');
+      el.className = 'heart-float';
+      el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      const size = Math.random() * 22 + 18;
+      el.style.cssText = `
+        font-size: ${size}px;
+        left: ${Math.random() * 96}vw;
+        animation-duration: ${Math.random() * 7 + 6}s;
+        animation-delay: 0s;
+      `;
+      el.addEventListener('click', () => {
+        el.classList.add('pop');
+        el.addEventListener('animationend', () => { el.remove(); spawnOne(); }, { once: true });
+      });
+      floats.appendChild(el);
+    }
+
+    for (let i = 0; i < COUNT; i++) makeFloat();
   </script>
 </body>
 </html>
