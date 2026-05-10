@@ -664,6 +664,19 @@
         white-space: normal !important;
       }
     }
+
+    /* ===== SMOOTH SCROLL REVEAL ===== */
+    .scroll-reveal {
+      opacity: 0;
+      transform: translateY(80px) scale(0.95);
+      transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), 
+                  transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: opacity, transform;
+    }
+    .scroll-reveal.visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
   </style>
 </head>
 
@@ -770,7 +783,7 @@
     // Inject slides into masonry grid
     slidesData.forEach((data, index) => {
       const pContainer = document.createElement('div');
-      pContainer.className = 'polaroid-container';
+      pContainer.className = 'polaroid-container scroll-reveal';
       
       let mediaHTML = '';
       if (data.src.endsWith('.mp4')) {
@@ -914,6 +927,27 @@
 
     letterModal.addEventListener('click', (e) => {
       if (e.target === letterModal) letterModal.classList.remove('active');
+    });
+
+    // ===== SMOOTH SCROLL REVEAL ANIMATION =====
+    const scrollObserverOptions = {
+      root: null,
+      rootMargin: '0px 0px -50px 0px',
+      threshold: 0.1
+    };
+
+    const scrollObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target); // Only animate once
+        }
+      });
+    }, scrollObserverOptions);
+
+    // Start observing after DOM elements are added
+    document.querySelectorAll('.scroll-reveal').forEach(el => {
+      scrollObserver.observe(el);
     });
 
     // Pixie Dust Mouse Trail (Disabled per request)
