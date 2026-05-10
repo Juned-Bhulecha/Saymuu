@@ -404,33 +404,39 @@ function initGamifiedFeatures() {
     }
 
     function typeMessage() {
-        let i = 0;
         const htmlContent = originalMessage.innerHTML;
+        // Split by <br><br> to get logical paragraphs
+        const paragraphs = htmlContent.split('<br><br>');
         typewriterText.innerHTML = '';
         
-        function typeWriter() {
-            if (i < htmlContent.length) {
-                if (htmlContent.charAt(i) === '<') {
-                    let tag = '';
-                    while (htmlContent.charAt(i) !== '>' && i < htmlContent.length) {
-                        tag += htmlContent.charAt(i);
-                        i++;
-                    }
-                    tag += '>';
-                    i++; // Advance past the '>'
-                    typewriterText.innerHTML += tag;
-                } else {
-                    typewriterText.innerHTML += htmlContent.charAt(i);
-                    i++;
-                }
-                setTimeout(typeWriter, 35);
-            } else {
-                typewriterText.classList.add('done');
-                signature.style.opacity = '1';
-                signature.style.transition = 'opacity 2s';
-            }
-        }
-        typeWriter();
+        paragraphs.forEach((pText, index) => {
+            if(!pText.trim()) return;
+            const p = document.createElement('div');
+            p.innerHTML = pText;
+            // Initial state for animation
+            p.style.opacity = '0';
+            p.style.transform = 'translateY(15px)';
+            p.style.filter = 'blur(4px)';
+            p.style.transition = 'all 1s cubic-bezier(0.22, 1, 0.36, 1)';
+            p.style.marginBottom = '1.2em';
+            p.style.lineHeight = '1.6';
+            
+            typewriterText.appendChild(p);
+            
+            // Trigger animation with staggered delay
+            setTimeout(() => {
+                p.style.opacity = '1';
+                p.style.transform = 'translateY(0)';
+                p.style.filter = 'blur(0)';
+            }, 600 + (index * 1200)); // Wait 600ms, then stagger each by 1.2s
+        });
+        
+        // Show signature at the very end
+        setTimeout(() => {
+            typewriterText.classList.add('done');
+            signature.style.opacity = '1';
+            signature.style.transition = 'opacity 2s ease';
+        }, 600 + (paragraphs.length * 1200) + 500);
     }
 }
 

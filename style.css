@@ -11,7 +11,7 @@
 html,body{
   min-height:100vh;
   background: linear-gradient(160deg, #fff0f6 0%, #ffe4ef 50%, #fce4ff 100%);
-  font-family:'Nunito',sans-serif;
+  font-family:'Nunito', 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif;
   overflow-x:hidden;
   color:#4a1030;
   -webkit-tap-highlight-color: transparent;
